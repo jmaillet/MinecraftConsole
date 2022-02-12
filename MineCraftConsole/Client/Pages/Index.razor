@@ -1,0 +1,76 @@
+﻿@page "/"
+@using Microsoft.AspNetCore.SignalR.Client
+@inject NavigationManager NavigationManager
+@implements IAsyncDisposable
+
+<PageTitle>Index</PageTitle>
+
+
+<div class="form-group">
+    <label>
+       
+        <input value=@command @oninput=@(e => command = e.Value?.ToString()) size="80" @onkeypress=@OnEnter/>
+    </label>
+</div>
+
+
+<hr>
+
+<textarea readonly cols="80" rows="30" style="font-family:Consolas,monospace">
+    @foreach(var message in messages)
+    {
+        @($"{message}\n")
+    }
+</textarea>
+
+@code {
+    private HubConnection? hubConnection;
+    private List<string> messages = new List<string>();
+
+    private string? command;
+
+    protected override async Task OnInitializedAsync()
+    {
+        hubConnection = new HubConnectionBuilder()
+            .WithUrl(NavigationManager.ToAbsoluteUri("/consolehub"))
+            .Build();
+
+        hubConnection.On<string>("Receive", (output) =>
+        {
+
+            messages.Add(output);
+            StateHasChanged();
+        });
+
+        await hubConnection.StartAsync();
+    }
+
+    private async Task OnEnter(KeyboardEventArgs e)
+    {
+        if(e.Key == "Enter")
+        {
+            await Send();
+            command = "";
+        }
+    }
+
+    private async Task Send()
+    {
+        if (hubConnection is not null)
+        {
+            await hubConnection.SendAsync("SendCommandAsync",command);
+        }
+
+    }
+
+    public bool IsConnected =>
+        hubConnection?.State == HubConnectionState.Connected;
+
+    public async ValueTask DisposeAsync()
+    {
+        if (hubConnection is not null)
+        {
+            await hubConnection.DisposeAsync();
+        }
+    }
+}

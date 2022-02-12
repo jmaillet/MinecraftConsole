@@ -1,0 +1,43 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.0.31717.71
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MineCraftConsole.Server", "MineCraftConsole\Server\MineCraftConsole.Server.csproj", "{D0EE1B90-D68F-408A-8948-7E87A5D944C2}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MineCraftConsole.Client", "MineCraftConsole\Client\MineCraftConsole.Client.csproj", "{D34F0B58-CC94-476F-A210-55254FBFB962}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MineCraftConsole.Shared", "MineCraftConsole\Shared\MineCraftConsole.Shared.csproj", "{03A89136-335C-4056-BF84-0879FA60F103}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CraftWrap", "CraftWrap\CraftWrap.csproj", "{00BB03B7-7A0E-47F6-BB0B-3ED1E540A43D}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{D0EE1B90-D68F-408A-8948-7E87A5D944C2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D0EE1B90-D68F-408A-8948-7E87A5D944C2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D0EE1B90-D68F-408A-8948-7E87A5D944C2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D0EE1B90-D68F-408A-8948-7E87A5D944C2}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D34F0B58-CC94-476F-A210-55254FBFB962}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D34F0B58-CC94-476F-A210-55254FBFB962}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D34F0B58-CC94-476F-A210-55254FBFB962}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D34F0B58-CC94-476F-A210-55254FBFB962}.Release|Any CPU.Build.0 = Release|Any CPU
+		{03A89136-335C-4056-BF84-0879FA60F103}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{03A89136-335C-4056-BF84-0879FA60F103}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{03A89136-335C-4056-BF84-0879FA60F103}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{03A89136-335C-4056-BF84-0879FA60F103}.Release|Any CPU.Build.0 = Release|Any CPU
+		{00BB03B7-7A0E-47F6-BB0B-3ED1E540A43D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{00BB03B7-7A0E-47F6-BB0B-3ED1E540A43D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{00BB03B7-7A0E-47F6-BB0B-3ED1E540A43D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{00BB03B7-7A0E-47F6-BB0B-3ED1E540A43D}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {B0F98951-EC73-4AEE-B9D0-57225899C3E7}
+	EndGlobalSection
+EndGlobal
