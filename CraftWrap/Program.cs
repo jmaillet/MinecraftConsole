@@ -19,7 +19,12 @@ public class Program
         .WithStandardInputPipe(new SocketPipeSource(listener.ClientSocket))
         .WithStandardOutputPipe(new SocketPipeTarget(listener.ClientSocket));
 
-        await Task.WhenAll(listener.ListenAsync(), cmd.ExecuteAsync());
+        var cts = new CancellationTokenSource();
+
+        var minecraftServerTask = cmd.ExecuteAsync(cts.Token);
+        int processId = minecraftServerTask.ProcessId;
+
+        await Task.WhenAll(listener.ListenAsync(cts.Token), minecraftServerTask);
         
 
   

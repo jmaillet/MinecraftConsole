@@ -20,7 +20,7 @@ namespace CraftWrap
 
         public Socket ClientSocket { get; }
 
-        public async Task ListenAsync()
+        public async Task ListenAsync(CancellationToken cancellationToken)
         {
             if (File.Exists(SOCKET_ADDR))
             {
@@ -35,9 +35,9 @@ namespace CraftWrap
             listener.Listen(1);
             // Start an asynchronous socket to listen for connections.  
             Console.WriteLine("Waiting for a connection...");
-            _ = await listener.AcceptAsync(ClientSocket).ConfigureAwait(false);
+            _ = await listener.AcceptAsync(ClientSocket,cancellationToken).ConfigureAwait(false);
            
-            Console.WriteLine("Client connected.");
+           
         }
     }
 
