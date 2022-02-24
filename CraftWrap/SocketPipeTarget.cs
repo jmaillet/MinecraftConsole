@@ -18,6 +18,7 @@ public class SocketPipeTarget : PipeTarget
 
         while(!cancellationToken.IsCancellationRequested)
         {
+            var line = await sourceReader.ReadLineAsync().ConfigureAwait(false);
             if (_client.Connected)
             {
                 if(socketWriter == null)
@@ -26,9 +27,10 @@ public class SocketPipeTarget : PipeTarget
                 }
                 else
                 {
-                    await socketWriter.WriteLineAsync(await sourceReader.ReadLineAsync().ConfigureAwait(false)).WaitAsync(cancellationToken).ConfigureAwait(false);
+                    await socketWriter.WriteLineAsync(line).WaitAsync(cancellationToken).ConfigureAwait(false);
                 }
             }
+            Console.WriteLine(line);
         }
     }
 }
