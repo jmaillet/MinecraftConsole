@@ -1,9 +1,5 @@
 ﻿
 using CliWrap;
-using CliWrap.EventStream;
-using System.Collections.Concurrent;
-
-using static System.Console;
 
 namespace CraftWrap;
 
@@ -12,7 +8,7 @@ public class Program
   public static async Task Main(string[] args)
   {
 
-
+        var listener = new SocketListener();
 
         var cmd = Cli.Wrap("java")
         .WithArguments(args => args
@@ -20,10 +16,11 @@ public class Program
                       .Add("-Xms1024M")
         .Add("-jar").Add("c:\\mc\\server-1.17.jar").Add("nogui"))
         .WithWorkingDirectory("c:\\mc")
-        .WithStandardInputPipe(PipeSource.FromStream(OpenStandardInput()))
-        .WithStandardOutputPipe(PipeTarget.ToStream(OpenStandardOutput()));
+        .WithStandardInputPipe(new SocketPipeSource(listener.ClientSocket))
+        .WithStandardOutputPipe(new SocketPipeTarget(listener.ClientSocket));
 
-        var process =  cmd.ExecuteAsync();
+        await Task.WhenAll(listener.ListenAsync(), cmd.ExecuteAsync());
+        
 
   
   }
