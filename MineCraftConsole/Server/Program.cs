@@ -18,10 +18,8 @@ app.Run();
 
 static void ConfigureServices(IServiceCollection services)
 {
-  services.AddSingleton<Coordinator>();
-services.AddSingleton<IReceiver>(sp => sp.GetRequiredService<Coordinator>());
-    services.AddSingleton<ICoordinator>(sp => sp.GetRequiredService<Coordinator>());
-  services.AddHostedService<MineCraftService>();
+ 
+
   services.AddRazorPages();
   services.AddSignalR();
   services.AddResponseCompression(opts =>
