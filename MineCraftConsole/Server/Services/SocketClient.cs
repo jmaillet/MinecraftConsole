@@ -20,11 +20,11 @@ public class SocketClient : IDisposable
 
     private Socket? _client;
 
-    public SocketClient(ILogger<SocketClient> logger, ChannelReader<string> reader, ChannelWriter<string> writer)
+    public SocketClient(ILogger<SocketClient> logger, Channel<string> channel)
     {
         _logger = logger;
-        _reader = reader;
-        _writer = writer;
+        _reader = channel.Reader;
+        _writer = channel.Writer;
     }
 
     public async Task ConnectAsync(CancellationToken cancellationToken)

@@ -1,8 +1,9 @@
 using Microsoft.AspNetCore.ResponseCompression;
 using MineCraftConsole.Server.Hubs;
 using MineCraftConsole.Server.Services;
+using System.Threading.Channels;
 
-#pragma warning disable IDE0058 
+#pragma warning disable IDE0058
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -18,7 +19,7 @@ app.Run();
 
 static void ConfigureServices(IServiceCollection services)
 {
- 
+  services.AddSingleton(Channel.CreateBounded<string>(100));
 
   services.AddRazorPages();
   services.AddSignalR();
