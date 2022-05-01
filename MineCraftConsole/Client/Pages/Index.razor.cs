@@ -1,62 +1,57 @@
 using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Web;
 using Microsoft.AspNetCore.SignalR.Client;
-using System.Threading.Channels;
+using MineCraftConsole.Shared;
 
 namespace MineCraftConsole.Client.Pages;
 
 public partial class Index
 {
-  private HubConnection? _hubConnection = default!;
-  private List<string> _messages = new List<string>();
+  [Inject]
+  private HttpClient HttpClient { get; set; } = default!;
+
+  private HubConnection _hubConnection = default!; // set in OnInit
+  private List<string> _messages = new();
   private string _command = string.Empty;
-  private ChannelReader<string> _consoleReader = default!;
-  private Channel<string> _channel = default!;
 
-  protected override async Task OnInitializedAsync()
+
+  protected async override Task OnInitializedAsync()
   {
-    _channel = Channel.CreateBounded<string>(100);
-
-   
     _hubConnection = new HubConnectionBuilder()
       .WithUrl(NavigationManager
       .ToAbsoluteUri("/consolehub"))
       .Build();
 
+    _hubConnection.On<string>(nameof(IConsoleClient.ReceiveLine), RecieveLine);
+
     await _hubConnection.StartAsync();
-
-    _consoleReader = await _hubConnection.StreamAsChannelAsync<string>("ReadMessageStream");
-    await _hubConnection.SendAsync("WriteMessageStream", _channel.Reader);
-
   }
 
-  protected override async Task OnAfterRenderAsync(bool firstRender)
+  private async Task StartServer()
   {
-    if (firstRender)
-    {
-      await foreach(var message in _consoleReader.ReadAllAsync())
-      {
-        _messages.Add(message);
-        StateHasChanged();
-      }
-    }
+    var resp = await HttpClient.PostAsync("/api/server/start",null);
+    _messages.Add($"HTTP {resp.StatusCode}");
+    _messages.Add(await resp.Content.ReadAsStringAsync());
+  }
+
+  private async Task StopServer()
+  {
+    await HttpClient.PostAsync("/api/server/stop", null);
+  }
+
+  private void RecieveLine(string line)
+  {
+    _messages.Add(line);
+    StateHasChanged();
   }
 
   private async Task OnEnter(KeyboardEventArgs e)
   {
     if (e.Key == "Enter")
     {
-      await _channel.Writer.WriteAsync(_command);
-      _command = "";
+      await _hubConnection.SendAsync("Send", _command);
     }
   }
-  
+
   public bool IsConnected => _hubConnection?.State == HubConnectionState.Connected;
-  public async ValueTask DisposeAsync()
-  {
-    if (_hubConnection is not null)
-    {
-      await _hubConnection.DisposeAsync();
-    }
-  }
 }

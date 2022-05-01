@@ -1,11 +1,14 @@
 ﻿@page "/"
 @using Microsoft.AspNetCore.SignalR.Client
 @inject NavigationManager NavigationManager
-@implements IAsyncDisposable
+
 
 <PageTitle>Index</PageTitle>
 
-
+<div>
+    <button class="btn btn-success" @onclick="StartServer">Start</button>
+    <button class="btn btn-danger" @onclick="StopServer">Stop</button>
+</div>
 <div class="form-group">
     <label>
        

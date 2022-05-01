@@ -1,31 +1,19 @@
 ﻿using Microsoft.AspNetCore.SignalR;
-using MineCraftConsole.Server.Services;
+using MineCraftConsole.Shared;
 using System.Threading.Channels;
 
-namespace MineCraftConsole.Server.Hubs
+namespace MineCraftConsole.Server.Hubs;
+
+public class ConsoleHub : Hub<IConsoleClient>
 {
-    public class ConsoleHub : Hub
-    {
-        private readonly Channel<string> _channel;
+  private readonly ChannelWriter<string> _channelWriter;
 
-        public ConsoleHub(Channel<string> channel)
-        {
-            _channel = channel;
-        }
+  public ConsoleHub(ChannelWriter<string> channelWriter)
+  {
+    _channelWriter = channelWriter;
+  }
+  public async Task Send(string message) => await _channelWriter.WriteAsync(message);
 
-        public async Task WriteMessageStream(ChannelReader<string> stream)
-        {
-            while (await stream.WaitToReadAsync())
-            {
-                var line = await stream.ReadAsync();
-                await _channel.Writer.WriteAsync(line);
 
-            }
-        }
-
-        public ChannelReader<string> ReadMessageStream()
-        {
-            return _channel.Reader;
-        }
-    }
+ 
 }
