@@ -1,24 +1,30 @@
 ﻿@page "/"
 @using MineCraftConsole.Shared
-@if (_servers is not null)
-{
+
+<div class="content">
+    <h4>Servers</h4>
+    @if (_servers is not null)
+    {
     <table class="table table-striped">
-        <tr>
-            <th>
-                Id
-            </th>
-            <th>
-                Name
-            </th>
-            <th>
-                Path
-            </th>
-            <th>
-                Running?
-            </th>
-        </tr>
-        @foreach (var server in _servers)
-        {
+        <thead>
+            <tr>
+                <th>
+                    Id
+                </th>
+                <th>
+                    Name
+                </th>
+                <th>
+                    Path
+                </th>
+                <th>
+                    Running?
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var server in _servers)
+            {
             <tr>
                 <td><NavLink href=@($"/servers/{server.Id}")>@server.Id</NavLink></td>
                 <td>@server.Name</td>
@@ -26,12 +32,13 @@
                 <td>@(server.ProcessId is not null)</td>
 
             </tr>
-        }
+            }
+        </tbody>
     </table>
-}
-else
-{
+    }
+    else
+    {
     <div>Fetching Server list ...</div>
-}
+    }
 
-
+</div>

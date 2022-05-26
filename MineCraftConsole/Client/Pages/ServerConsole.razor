@@ -10,24 +10,25 @@
     <h3>@_server.Name</h3>
     <div class="mb-3">
         <button class="btn btn-success me-2" disabled=@IsRunning @onclick="StartServer">Start</button>
-        <button class="btn btn-danger" disabled=@(!IsRunning) @onclick="StopServer">Stop</button>
+        <button class="btn btn-danger" disabled="@(!IsRunning)" @onclick="StopServer">Stop</button>
     </div>
-    <div class="form-group">
-        <label>
-
-            <input value=@_command @oninput=@(e => _command = e.Value?.ToString()) size="80" @onkeypress=@OnEnter />
-        </label>
-    </div>
+    
 
 
     <hr>
 
-    <textarea readonly cols="120" rows="30" style="font-family:Consolas,monospace">
+    <pre class="form-control" style="width: 80rem; height: 800px;font-family:Consolas,monospace; white-space:pre-wrap">
         @foreach (var message in _messages)
         {
             @($"{message}\n")
         }
-    </textarea>
+    </pre>
+    <div class="form-group">
+        <label>
+
+            <input class="form-control" value=@_command @oninput=@(e => _command = e.Value?.ToString()) size="80" @onkeypress=@OnEnter />
+        </label>
+    </div>
 
 }
 
