@@ -4,6 +4,7 @@ using MineCraftConsole.Server.Hubs;
 using MineCraftConsole.Shared;
 
 namespace MineCraftConsole.Server.Services;
+
 public class HubPipeTarget : PipeTarget
 {
   private readonly IHubContext<ConsoleHub, IConsoleClient> _context;
@@ -17,7 +18,7 @@ public class HubPipeTarget : PipeTarget
   {
     var sr = new StreamReader(origin);
     string? line;
-    while((line = await sr.ReadLineAsync()) != null)
+    while ((line = await sr.ReadLineAsync()) != null)
     {
       await _context.Clients.All.ReceiveLine(line);
     }

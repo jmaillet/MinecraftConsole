@@ -10,7 +10,6 @@ public class ServerRunner : IServerRunner
 
   public ServerRunner(PipeSource pipeSource, PipeTarget pipeTarget)
   {
-  
     _pipeSource = pipeSource;
     _pipeTarget = pipeTarget;
   }
@@ -31,6 +30,6 @@ public class ServerRunner : IServerRunner
       .WithStandardOutputPipe(_pipeTarget)
       .WithStandardErrorPipe(_pipeTarget)
       .ExecuteAsync();
-   
+
   }
 }

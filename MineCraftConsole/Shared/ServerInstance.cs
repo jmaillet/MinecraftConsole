@@ -1,10 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Text;
+﻿using System.ComponentModel.DataAnnotations;
 using System.Text.Json.Serialization;
-using System.Threading.Tasks;
 
 namespace MineCraftConsole.Shared;
 public class ServerInstance
@@ -19,7 +14,7 @@ public class ServerInstance
     Xms = xms;
   }
 
-  public ServerInstance(string name, string serverJarPath, string xmx, string xms) 
+  public ServerInstance(string name, string serverJarPath, string xmx, string xms)
     : this(0, name, serverJarPath, xmx, xms) { }
 
   [Key]

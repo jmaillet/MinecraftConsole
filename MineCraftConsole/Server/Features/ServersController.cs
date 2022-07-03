@@ -1,9 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Caching.Memory;
 using MineCraftConsole.Server.Persistence;
 using MineCraftConsole.Server.Services;
-using MineCraftConsole.Shared;
 using System.Threading.Channels;
 
 namespace MineCraftConsole.Server.Features;
@@ -28,7 +26,7 @@ public class ServersController : ControllerBase
   public async Task<ActionResult> Start(int id)
   {
     var server = await _db.ServerInstances.FindAsync(id);
-    if(server is null)
+    if (server is null)
     {
       return NotFound();
     }
@@ -42,7 +40,7 @@ public class ServersController : ControllerBase
   public async Task<ActionResult> Stop(int id)
   {
     var server = await _db.ServerInstances.FindAsync(id);
-    if(server is null)
+    if (server is null)
     {
       return NotFound();
     }
@@ -64,4 +62,5 @@ public class ServersController : ControllerBase
     var server = await _db.ServerInstances.FindAsync(id);
     return server is null ? NotFound() : Ok(server);
   }
+
 }

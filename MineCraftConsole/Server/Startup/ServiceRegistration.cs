@@ -1,32 +1,16 @@
-﻿using Microsoft.EntityFrameworkCore;
-using Microsoft.AspNetCore.ResponseCompression;
-using Microsoft.AspNetCore.SignalR;
-using MineCraftConsole.Server.Hubs;
-using MineCraftConsole.Server.Services;
-using MineCraftConsole.Shared;
-using System.Threading.Channels;
+﻿using Microsoft.AspNetCore.ResponseCompression;
 using MineCraftConsole.Server.Persistence;
+using MineCraftConsole.Server.Services;
 
 namespace MineCraftConsole.Server.Startup;
 public static class ServiceRegistration
 {
   public static WebApplicationBuilder RegisterServices(this WebApplicationBuilder builder)
   {
-    var channel = Channel.CreateBounded<string>(10);
-    builder.Services.AddSingleton(channel.Reader);
-    builder.Services.AddSingleton(channel.Writer);
+    builder.Services.AddSingleton<IServerRunnerFactory, ServerRunnerFactory>();
+    builder.Services.AddHttpClient();
 
-    // TODO: Make a factory
-    builder.Services.AddSingleton<IServerRunner>(sp =>
-    {
-
-      var pipeSource = new ChannelReaderPipeSource(sp.GetRequiredService<ChannelReader<string>>());
-      var pipeTarget = new HubPipeTarget(sp.GetRequiredService<IHubContext<ConsoleHub, IConsoleClient>>());
-      return new ServerRunner(pipeSource, pipeTarget);
-    });
-
-    builder.Services.AddResponseCompression(opts =>
-    {
+    builder.Services.AddResponseCompression(opts => {
       opts.MimeTypes = ResponseCompressionDefaults.MimeTypes.Concat(
           new[] { "application/octet-stream" });
     });

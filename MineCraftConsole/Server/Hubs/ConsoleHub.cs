@@ -12,8 +12,6 @@ public class ConsoleHub : Hub<IConsoleClient>
   {
     _channelWriter = channelWriter;
   }
+
   public async Task Send(string message) => await _channelWriter.WriteAsync(message);
-
-
- 
 }

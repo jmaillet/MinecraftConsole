@@ -12,9 +12,7 @@
         <button class="btn btn-success me-2" disabled=@IsRunning @onclick="StartServer">Start</button>
         <button class="btn btn-danger" disabled="@(!IsRunning)" @onclick="StopServer">Stop</button>
     </div>
-    
-
-
+  
     <hr>
 
     <pre class="form-control" style="width: 80rem; height: 800px;font-family:Consolas,monospace; white-space:pre-wrap">
@@ -25,7 +23,6 @@
     </pre>
     <div class="form-group">
         <label>
-
             <input class="form-control" value=@_command @oninput=@(e => _command = e.Value?.ToString()) size="80" @onkeypress=@OnEnter />
         </label>
     </div>

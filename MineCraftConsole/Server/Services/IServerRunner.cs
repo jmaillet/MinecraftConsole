@@ -1,5 +1,4 @@
-﻿
-using CliWrap;
+﻿using CliWrap;
 using MineCraftConsole.Shared;
 
 namespace MineCraftConsole.Server.Services;

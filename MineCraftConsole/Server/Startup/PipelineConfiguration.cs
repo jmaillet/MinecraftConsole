@@ -1,16 +1,10 @@
 ﻿using MineCraftConsole.Server.Hubs;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace MineCraftConsole.Server.Startup;
 public static class PipelineConfiguration
 {
   public static WebApplication ConfigureRequestPipeline(this WebApplication app)
   {
-
     // Configure the HTTP request pipeline.
     if (app.Environment.IsDevelopment())
     {
@@ -30,9 +24,7 @@ public static class PipelineConfiguration
 
     app.UseRouting();
 
-
-    app.UseEndpoints(endpoints =>
-    {
+    app.UseEndpoints(endpoints => {
       endpoints.MapControllers();
       endpoints.MapRazorPages();
       endpoints.MapHub<ConsoleHub>("/consolehub");
